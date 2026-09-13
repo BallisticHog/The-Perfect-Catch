@@ -1,0 +1,20 @@
+packages:
+    - "apps/*"
+    - "packages/*"
+
+catalog:
+    "@types/node": 22.20.2
+    "@types/react": 19.3.0
+    "@types/react-dom": 19.3.0
+    better-auth: 1.7.4
+    cheerio: 1.2.0
+    drizzle-orm: 0.45.2
+    graphile-worker: 0.17.0
+    iconv-lite: 0.7.3
+    next: 16.3.5
+    postgres: 3.4.9
+    react: 19.3.0
+    react-dom: 19.3.0
+    typescript: 5.9.3
+    vitest: 5.0.0
+    zod: 4.6.2

@@ -1,0 +1,32 @@
+# Dependencies and build output
+node_modules/
+.next/
+dist/
+coverage/
+playwright-report/
+test-results/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+*.local
+
+# Databases, media, source captures, and backups
+.data/
+data/
+media/
+snapshots/
+backups/
+*.dump
+*.sql.gz
+
+# Editor and operating system state
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Tool state
+.dprint-cache/
+*.tsbuildinfo
