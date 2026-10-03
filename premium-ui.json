@@ -1,0 +1,13 @@
+{
+    "profile": "product-admin",
+    "sourceRoots": ["apps/web/src", "packages/ui/src"],
+    "locale": "en-ZA",
+    "canonicalMap": "UX-CONTRACT.md",
+    "requiredCapabilities": ["Select/Listbox", "Form", "Scrollbar"],
+    "ownership": {
+        "Select/Listbox": "native"
+    },
+    "evidence": {
+        "failurePaths": "apps/web/test/protected-routes.test.ts"
+    }
+}

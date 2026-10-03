@@ -12,6 +12,7 @@
         "build": "pnpm -r --if-present build",
         "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm check:no-em-dash",
         "check:no-em-dash": "node scripts/check-no-em-dash.mjs",
+        "catalog:refresh-local": "pnpm --filter @the-perfect-catch/worker catalog:refresh-local",
         "dev": "pnpm --parallel --filter @the-perfect-catch/web --filter @the-perfect-catch/worker dev",
         "format": "dprint fmt",
         "format:check": "dprint check",
@@ -33,5 +34,12 @@
         "react-dom": "19.3.0",
         "typescript": "5.9.3",
         "vitest": "5.0.0"
+    },
+    "pnpm": {
+        "overrides": {
+            "@types/pg": "8.23.1",
+            "drizzle-orm": "0.45.2",
+            "pg": "8.23.0"
+        }
     }
 }

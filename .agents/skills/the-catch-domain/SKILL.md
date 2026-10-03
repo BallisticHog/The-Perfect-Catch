@@ -9,7 +9,9 @@ Read `docs/architecture/overview.md` for domain changes. Read `DESIGN.md` and `U
 
 The first release is a private Google allowlist beta for the 2026 SA Schools Championships at Roodeplaat, 6 to 8 March 2026. Preserve the publisher's event/race structure, source URL identity, raw labels, result statuses, and provenance. Do not substitute row order for placing or missing time for zero.
 
-Use exact school aliases only. Keep ambiguous organization labels unresolved until an explicit mapping exists. Preserve required race-local athlete appearances with source names, seats, cox status, and raw annotations. Do not introduce a canonical athlete table, athlete search, athlete profiles, or cross-race person matching. A race-local appearance does not authorize a separate personal data feature.
+Use exact school aliases only. Keep ambiguous organization labels unresolved until an explicit mapping exists. Preserve required race-local athlete appearances with source names, seats, cox status, and raw annotations.
+
+The private championship catalogue may project a source-name rower record by exact normalized published name plus exact school inside one regatta. This projection may be searched and may link its race appearances, events, and school. Label it as a source record, not a verified person profile. Do not fuzzy-match names, merge across schools or regattas, claim a lifetime identity, or create a canonical athlete table. Any broader identity feature requires coach-confirmed links and a new governance review.
 
 Keep the Catch shell stable. Use the Regatta Instrument tokens and font roles from `DESIGN.md`. Limit school accents to school context. Label the St Dunstan's navy and bronze palette as inferred; retain the official source link and rights state for identity assets.
 

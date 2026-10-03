@@ -11,7 +11,9 @@ Keep the beta private by default. `official_source_unlicensed` records may be us
 
 Retain evidence, reviewer, scope, and timestamp for approvals. Do not invent permission from source availability or attribution. Mark St Dunstan's palette as inferred and retain its official identity source. Protect crests, raw snapshots, and operational metadata according to their rights and access scope.
 
-Allow the required race-local crew appearances as part of their result context. Do not add athlete profiles, athlete search, a canonical athlete table, or cross-race person links. Minimize personal data beyond this result context in rendered responses, indexes, logs, and exports. Keep provenance without promoting appearances into an identity product.
+Allow race-local crew appearances as part of their result context. Inside the private beta, exact published name plus exact school may be grouped across races in the same regatta and exposed as a clearly labelled source-name record. This narrow projection may be searched within that regatta. It must warn that same-name people can be combined and must not claim a verified, current, or lifelong identity.
+
+Do not fuzzy-match people, merge across schools or regattas, create a canonical athlete table, or expose a public athlete directory. Minimize personal data in rendered responses, indexes, logs, and exports. Any broader athlete identity feature requires coach confirmation, correction and split workflows, and a separate privacy review.
 
 Require a verified Google email, trim plus Unicode NFC plus lowercase email normalization, stable subject binding, and a current active grant on every protected request. Never strip email dots or plus suffixes. Enforce the current administrator role on the server. A 24-hour database session does not delay revocation. Apply access checks to direct data and media paths as well as visible pages.
 

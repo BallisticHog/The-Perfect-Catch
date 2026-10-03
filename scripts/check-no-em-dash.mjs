@@ -11,7 +11,10 @@ const excludedPrefixes = [
     "node_modules/",
     "packages/ingestion/fixtures/raw/",
 ];
-const excludedFiles = new Set(["pnpm-lock.yaml"]);
+const excludedFiles = new Set([
+    "apps/web/AGENTS.md",
+    "pnpm-lock.yaml",
+]);
 
 function isFirstPartyFile(filePath)
 {

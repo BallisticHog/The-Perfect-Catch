@@ -17,6 +17,22 @@ The results path contains `2026-Feb-SASChamps`; keep the exact source path even 
 
 The publisher's pages identify individual result status, such as Official. That status describes the sporting result. It is separate from permission to reuse the content, Catch's ingestion state, and deployment approval.
 
+## First live regatta
+
+| Field             | Value                                                                                                    |
+| ----------------- | -------------------------------------------------------------------------------------------------------- |
+| Regatta           | St Mary's U16, U19 and Masters                                                                           |
+| Venue             | Roodeplaat                                                                                               |
+| Date              | 3 October 2026                                                                                           |
+| Results index     | https://www.regattaresults.co.za/Results/Results2026/2026-Oct-Mary1619M/results.htm                      |
+| Encoding          | Windows-1252                                                                                             |
+| Observed content  | Scheduled starts, lane draws, scratches, organizations, crews, statuses, progression and published times |
+| Initial use state | `official_source_unlicensed`, eligible for the private beta only                                         |
+
+The live adapter is limited to this exact source directory. It preserves malformed observations
+for diagnostics while retaining the last readable state. See
+[the live regatta contract](../architecture/live-regatta-contract.md).
+
 ## School identity
 
 | Field                       | Value                           |

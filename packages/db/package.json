@@ -1,0 +1,20 @@
+{
+    "name": "@the-perfect-catch/db",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "exports": { ".": "./src/index.ts", "./schema": "./src/schema.ts" },
+    "scripts": {
+        "typecheck": "tsc --noEmit",
+        "test": "vitest run --passWithNoTests",
+        "migrate": "tsx src/migrate.ts"
+    },
+    "dependencies": { "@the-perfect-catch/domain": "workspace:*", "drizzle-orm": "0.45.2", "pg": "8.23.0" },
+    "devDependencies": {
+        "@types/pg": "8.23.1",
+        "@types/node": "22.20.2",
+        "typescript": "5.9.3",
+        "tsx": "4.20.6",
+        "vitest": "5.0.0"
+    }
+}

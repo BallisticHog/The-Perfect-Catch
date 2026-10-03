@@ -1,0 +1,48 @@
+{
+    "evidenceKind": "live-private-dry-parse",
+    "startedAt": "2026-09-14T08:01:58.577Z",
+    "completedAt": "2026-09-14T08:07:05.383Z",
+    "sourceUrl": "https://www.regattaresults.co.za/Results/Results2026/2026-Feb-SASChamps/results.htm",
+    "parserVersion": "sa-schools-2026.v1",
+    "userAgent": "The-Catch/0.1 (+https://github.com/BallisticHog/The-Perfect-Catch)",
+    "status": "validated",
+    "databaseUsed": false,
+    "publicationAttempted": false,
+    "sourceBytesRetention": "process-memory-only",
+    "encoding": "windows-1252",
+    "configuredMinimumIntervalMs": 1500,
+    "minimumObservedIntervalMs": 1500,
+    "networkAttempts": 204,
+    "httpStatusCounts": {
+        "200": 204
+    },
+    "documentCount": 204,
+    "discoveredDetailCount": 203,
+    "parsedRaceCount": 203,
+    "eventCount": 42,
+    "resultCount": 1465,
+    "appearanceCount": 4045,
+    "officialRaceCount": 203,
+    "roundCounts": {
+        "final-a": 42,
+        "heat": 143,
+        "semifinal": 18
+    },
+    "resultStatusCounts": {
+        "dnf": 11,
+        "dns": 47,
+        "finished": 1394,
+        "scratch": 9,
+        "unknown": 4
+    },
+    "issueCodeCounts": {
+        "unknown-result-status": 4,
+        "unmapped-school": 1465
+    },
+    "aliasCount": 0,
+    "overviewSha256": "85f411dccb4f1648494a5c6338dce721bf4f83566564dfb36ad3e358620d88c0",
+    "sourceKeysSha256": "30356e111d0bedf56adbac12707c8747f7a590da62ef203b69da04bb1f2a4c3e",
+    "sourceBodiesSha256": "7d9041962082d0b28a14db719ac9b9761fe249a9a15a6b8e12366cb48e6511ea",
+    "raceStructureSha256": "7c88168ffe0d099deee42079c637402089a4862d20899a22f632a4dd37313b22",
+    "importManifestSha256": "ba2cdcf009a17adbb04bfeecb28c379688e0eb96fde8732b342ef72083cfefd6"
+}

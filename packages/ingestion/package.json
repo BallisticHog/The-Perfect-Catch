@@ -1,0 +1,15 @@
+{
+    "name": "@the-perfect-catch/ingestion",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "exports": { ".": "./src/index.ts" },
+    "scripts": { "typecheck": "tsc --noEmit", "test": "vitest run" },
+    "dependencies": {
+        "@the-perfect-catch/domain": "workspace:*",
+        "@the-perfect-catch/db": "workspace:*",
+        "cheerio": "1.2.0",
+        "iconv-lite": "0.7.3"
+    },
+    "devDependencies": { "@types/node": "22.20.2", "typescript": "5.9.3", "vitest": "5.0.0" }
+}

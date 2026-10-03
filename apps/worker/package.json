@@ -1,0 +1,30 @@
+{
+    "name": "@the-perfect-catch/worker",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "tsx watch src/index.ts",
+        "start": "tsx src/index.ts",
+        "typecheck": "tsc --noEmit",
+        "test": "vitest run",
+        "catalog:refresh-local": "tsx src/local-catalog.ts",
+        "live": "tsx src/live-cli.ts",
+        "enqueue:import": "tsx src/enqueue.ts",
+        "access:bootstrap": "tsx src/access-cli.ts bootstrap",
+        "access:grant": "tsx src/access-cli.ts grant",
+        "access:revoke": "tsx src/access-cli.ts revoke",
+        "crest:register": "tsx src/media-cli.ts register",
+        "crest:remove": "tsx src/media-cli.ts remove"
+    },
+    "dependencies": {
+        "@the-perfect-catch/db": "workspace:*",
+        "@the-perfect-catch/domain": "workspace:*",
+        "@the-perfect-catch/ingestion": "workspace:*",
+        "graphile-worker": "0.17.0",
+        "sharp": "0.35.4",
+        "tsx": "4.20.6",
+        "zod": "4.6.2"
+    },
+    "devDependencies": { "@types/node": "22.20.2", "typescript": "5.9.3", "vitest": "5.0.0" }
+}

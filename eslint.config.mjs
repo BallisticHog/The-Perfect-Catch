@@ -18,6 +18,7 @@ export default defineConfig([
             "@stylistic/semi": ["error", "always"],
             "curly": ["error", "all"],
             "no-console": ["error", { allow: ["error", "info", "warn"] }],
+            "@next/next/no-html-link-for-pages": "off",
         },
     },
     globalIgnores([
