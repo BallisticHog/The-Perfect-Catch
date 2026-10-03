@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily private archive backup
+
+[Timer]
+OnCalendar=*-*-* 02:00:00 UTC
+Unit=catch-backup@daily.service
+Persistent=true
+
+[Install]
+WantedBy=timers.target

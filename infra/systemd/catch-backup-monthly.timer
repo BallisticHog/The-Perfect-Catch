@@ -1,0 +1,10 @@
+[Unit]
+Description=Monthly private archive backup
+
+[Timer]
+OnCalendar=*-*-01 06:30:00 UTC
+Unit=catch-backup@monthly.service
+Persistent=true
+
+[Install]
+WantedBy=timers.target

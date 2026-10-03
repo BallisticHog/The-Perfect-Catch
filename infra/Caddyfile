@@ -1,0 +1,20 @@
+{
+    email {$ACME_EMAIL}
+    admin 127.0.0.1:2019
+}
+
+{$CATCH_DOMAIN} {
+    header {
+        defer
+        -Server
+        Strict-Transport-Security "max-age=31536000"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        Referrer-Policy "same-origin"
+        Permissions-Policy "camera=(), microphone=(), geolocation=()"
+        X-Robots-Tag "noindex, nofollow, noarchive, nosnippet"
+        Cache-Control "private, no-store, max-age=0"
+    }
+    encode zstd gzip
+    reverse_proxy web:3000
+}
