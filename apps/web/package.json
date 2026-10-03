@@ -1,0 +1,39 @@
+{
+    "name": "@the-perfect-catch/web",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "next dev --hostname 127.0.0.1",
+        "build": "next build",
+        "start": "next start --hostname 0.0.0.0",
+        "typecheck": "tsc --noEmit",
+        "test": "vitest run --passWithNoTests",
+        "test:e2e": "playwright test"
+    },
+    "dependencies": {
+        "@better-auth/drizzle-adapter": "1.7.4",
+        "@fontsource/ibm-plex-mono": "5.3.0",
+        "@fontsource/saira-condensed": "5.3.0",
+        "@fontsource/source-sans-3": "5.3.0",
+        "@the-perfect-catch/db": "workspace:*",
+        "@the-perfect-catch/domain": "workspace:*",
+        "@the-perfect-catch/ui": "workspace:*",
+        "better-auth": "1.7.4",
+        "drizzle-orm": "0.45.2",
+        "lucide-react": "0.577.0",
+        "next": "16.3.5",
+        "react": "19.3.0",
+        "react-dom": "19.3.0",
+        "server-only": "0.0.1"
+    },
+    "devDependencies": {
+        "@axe-core/playwright": "4.13.0",
+        "@playwright/test": "1.63.0",
+        "@types/node": "22.20.2",
+        "@types/react": "19.3.0",
+        "@types/react-dom": "19.3.0",
+        "typescript": "5.9.3",
+        "vitest": "5.0.0"
+    }
+}

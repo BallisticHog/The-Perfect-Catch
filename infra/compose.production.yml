@@ -1,0 +1,206 @@
+name: catch-production
+
+x-runtime-environment: &runtime-environment
+    NODE_ENV: production
+    DATABASE_URL: postgres://catch:${POSTGRES_PASSWORD:?Set the database password}@postgres:5432/catch
+
+x-logging: &logging
+    driver: json-file
+    options:
+        max-size: 10m
+        max-file: "3"
+
+services:
+    caddy:
+        image: caddy:2-alpine
+        restart: unless-stopped
+        read_only: true
+        cap_drop: [ALL]
+        cap_add: [NET_BIND_SERVICE]
+        security_opt: [no-new-privileges:true]
+        environment:
+            CATCH_DOMAIN: ${CATCH_DOMAIN:?Set the public hostname}
+            ACME_EMAIL: ${ACME_EMAIL:?Set the certificate contact email}
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - ./Caddyfile:/etc/caddy/Caddyfile:ro
+            - caddy_data:/data
+            - caddy_config:/config
+        tmpfs:
+            - /tmp:mode=1770
+        networks:
+            - edge
+        depends_on:
+            web:
+                condition: service_healthy
+        healthcheck:
+            test: [CMD, wget, --quiet, --output-document=/dev/null, http://127.0.0.1:2019/config/]
+            interval: 30s
+            timeout: 5s
+            retries: 3
+        logging: *logging
+
+    web:
+        image: ghcr.io/${GHCR_NAMESPACE:?Set lowercase owner/repository}-web:${IMAGE_TAG:?Set a full commit SHA}
+        restart: unless-stopped
+        init: true
+        user: "1000:1000"
+        read_only: true
+        cap_drop: [ALL]
+        security_opt: [no-new-privileges:true]
+        environment:
+            <<: *runtime-environment
+            APP_BASE_URL: https://${CATCH_DOMAIN:?Set the public hostname}
+            BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:?Set a random authentication secret}
+            GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:?Set the Google OAuth client ID}
+            GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:?Set the Google OAuth secret}
+            PUBLIC_CONTACT_EMAIL: ${PUBLIC_CONTACT_EMAIL:?Set the contact email}
+            SITE_PUBLIC_RELEASE_ENABLED: "false"
+            MEDIA_ROOT: /var/lib/catch/media
+            CATCH_LIVE_ROOT: /var/lib/catch/live
+            HOSTNAME: 0.0.0.0
+            PORT: "3000"
+        tmpfs:
+            - /tmp:uid=1000,gid=1000,mode=1770
+            - /app/apps/web/.next/cache:uid=1000,gid=1000,mode=0700
+        volumes:
+            - media:/var/lib/catch/media:ro
+            - live:/var/lib/catch/live:ro
+        networks:
+            edge:
+                gw_priority: 1
+            database: {}
+        depends_on:
+            postgres:
+                condition: service_healthy
+        healthcheck:
+            test: [CMD, node, /app/infra/health/web.mjs]
+            interval: 30s
+            timeout: 5s
+            retries: 3
+            start_period: 60s
+        logging: *logging
+
+    worker:
+        image: ghcr.io/${GHCR_NAMESPACE:?Set lowercase owner/repository}-worker:${IMAGE_TAG:?Set a full commit SHA}
+        restart: unless-stopped
+        init: true
+        user: "1000:1000"
+        read_only: true
+        cap_drop: [ALL]
+        security_opt: [no-new-privileges:true]
+        environment:
+            <<: *runtime-environment
+            BOOTSTRAP_GOOGLE_EMAIL: ${BOOTSTRAP_GOOGLE_EMAIL:-}
+            BOOTSTRAP_SECRET_SHA256: ${BOOTSTRAP_SECRET_SHA256:-}
+            SNAPSHOT_ROOT: /var/lib/catch/snapshots
+            REGATTA_RESULTS_USER_AGENT: ${REGATTA_RESULTS_USER_AGENT:?Set the source request user agent}
+        tmpfs:
+            - /tmp:uid=1000,gid=1000,mode=1770
+        volumes:
+            - snapshots:/var/lib/catch/snapshots
+        networks:
+            outbound:
+                gw_priority: 1
+            database: {}
+        depends_on:
+            postgres:
+                condition: service_healthy
+        healthcheck:
+            test: [CMD, node, /app/infra/health/worker.mjs]
+            interval: 30s
+            timeout: 5s
+            retries: 3
+            start_period: 60s
+        logging: *logging
+
+    live:
+        image: ghcr.io/${GHCR_NAMESPACE:?Set lowercase owner/repository}-worker:${IMAGE_TAG:?Set a full commit SHA}
+        restart: unless-stopped
+        init: true
+        user: "1000:1000"
+        read_only: true
+        cap_drop: [ALL]
+        security_opt: [no-new-privileges:true]
+        command: [pnpm, --filter, "@the-perfect-catch/worker", live]
+        environment:
+            NODE_ENV: production
+            CATCH_LIVE_ROOT: /var/lib/catch/live
+            CATCH_LIVE_SNAPSHOT_ROOT: /var/lib/catch/snapshots/live
+            REGATTA_RESULTS_USER_AGENT: ${REGATTA_RESULTS_USER_AGENT:?Set the source request user agent}
+        tmpfs:
+            - /tmp:uid=1000,gid=1000,mode=1770
+        volumes:
+            - live:/var/lib/catch/live
+            - snapshots:/var/lib/catch/snapshots
+        networks:
+            outbound:
+                gw_priority: 1
+        healthcheck:
+            test: [CMD, node, /app/infra/health/live.mjs]
+            interval: 30s
+            timeout: 5s
+            retries: 3
+            start_period: 120s
+        logging: *logging
+
+    postgres:
+        image: postgres:17-alpine
+        restart: unless-stopped
+        environment:
+            POSTGRES_DB: catch
+            POSTGRES_USER: catch
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set the database password}
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        networks:
+            - database
+        healthcheck:
+            test: [CMD-SHELL, "pg_isready -U catch -d catch"]
+            interval: 10s
+            timeout: 5s
+            retries: 10
+            start_period: 30s
+        logging: *logging
+
+    migrate:
+        image: ghcr.io/${GHCR_NAMESPACE:?Set lowercase owner/repository}-worker:${IMAGE_TAG:?Set a full commit SHA}
+        profiles: [operations]
+        restart: "no"
+        init: true
+        user: "1000:1000"
+        read_only: true
+        cap_drop: [ALL]
+        security_opt: [no-new-privileges:true]
+        command: [pnpm, --filter, "@the-perfect-catch/db", migrate]
+        environment: *runtime-environment
+        tmpfs:
+            - /tmp:uid=1000,gid=1000,mode=1770
+        networks:
+            - database
+        depends_on:
+            postgres:
+                condition: service_healthy
+        logging: *logging
+
+networks:
+    edge: {}
+    outbound: {}
+    database:
+        internal: true
+
+volumes:
+    postgres_data:
+        name: catch-production-postgres
+    media:
+        name: catch-production-media
+    snapshots:
+        name: catch-production-snapshots
+    live:
+        name: catch-production-live
+    caddy_data:
+        name: catch-production-caddy-data
+    caddy_config:
+        name: catch-production-caddy-config

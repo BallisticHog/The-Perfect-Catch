@@ -1,0 +1,10 @@
+{
+    "name": "@the-perfect-catch/domain",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "exports": { ".": "./src/index.ts" },
+    "scripts": { "typecheck": "tsc --noEmit", "test": "vitest run" },
+    "dependencies": { "zod": "4.6.2" },
+    "devDependencies": { "typescript": "5.9.3", "vitest": "5.0.0", "@types/node": "22.20.2" }
+}

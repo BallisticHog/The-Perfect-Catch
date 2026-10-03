@@ -1,0 +1,11 @@
+[Unit]
+Description=The Perfect Catch %i consistent full backup
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+User=root
+UMask=0077
+ExecStart=/usr/bin/bash /opt/the-perfect-catch/scripts/operations/backup.sh %i
+TimeoutStartSec=2h
